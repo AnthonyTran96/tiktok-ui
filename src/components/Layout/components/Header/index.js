@@ -3,11 +3,18 @@ import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faMagnifyingGlass, faSign } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleXmark,
+    faSpinner,
+    faMagnifyingGlass,
+    faSign,
+    faEllipsisVertical,
+} from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
+import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles);
 
@@ -15,8 +22,8 @@ function Header() {
     const [searchResult, setSearchResult] = useState([]);
     useEffect(() => {
         setTimeout(() => {
-            setSearchResult([]);
-        }, 3000);
+            setSearchResult([1, 2]);
+        }, 0);
     }, []);
     return (
         <header className={cx('wrapper')}>
@@ -57,6 +64,11 @@ function Header() {
                     <Button primary leftIcon={<FontAwesomeIcon icon={faSign} />}>
                         Log in
                     </Button>
+                    <Menu>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                    </Menu>
                 </div>
             </div>
         </header>
