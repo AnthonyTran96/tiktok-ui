@@ -5,6 +5,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import images from '~/assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from '~/components/Image';
 import {
     faCircleXmark,
     faSpinner,
@@ -14,7 +15,6 @@ import {
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCloudUpload,
     faUser,
     faCoins,
     faGear,
@@ -25,6 +25,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
+import { UploadIcon } from '~/components/icons';
 
 const cx = classNames.bind(styles);
 
@@ -36,10 +37,12 @@ const MENU_ITEMS = [
             title: 'Language',
             data: [
                 {
+                    type: 'language',
                     code: 'en',
                     title: 'English',
                 },
                 {
+                    type: 'language',
                     code: 'vi',
                     title: 'Tiếng Việt',
                 },
@@ -68,7 +71,11 @@ function Header() {
     }, []);
 
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
+        switch (menuItem.type) {
+            case 'language':
+                break;
+            default:
+        }
     };
 
     const userMenu = [
@@ -139,7 +146,7 @@ function Header() {
                         <>
                             <Tippy content="Upload video" placement="bottom" delay={[0, 200]}>
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <UploadIcon />
                                 </button>
                             </Tippy>
                         </>
@@ -153,10 +160,11 @@ function Header() {
                     )}
                     <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                         {currentUser ? (
-                            <img
-                                src="https://th.bing.com/th/id/R.7d9254704e0f2c3fa895f157287b801a?rik=LGzXs5XQ4Yn%2bHA&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpokemon%2fpokemon_PNG11.png&ehk=qT2k1KP5%2btsflhJou%2bFi2bNc%2fYWhkCilgN3cRlj9xK4%3d&risl=&pid=ImgRaw&r=0"
+                            <Image
+                                src="https://th.bing.com/th//R.7d9254704e0f2c3fa895f157287b801a?rik=LGzXs5XQ4Yn%2bHA&riu=http%3a%2f%2fpngimg.com%2fuploads%2fpokemon%2fpokemon_PNG11.png&ehk=qT2k1KP5%2btsflhJou%2bFi2bNc%2fYWhkCilgN3cRlj9xK4%3d&risl=&pid=ImgRaw&r=0"
                                 className={cx('user-avatar')}
                                 alt="Nguyen Van A"
+                                fallback="https://fullstack.edu.vn/static/media/f8-icon.18cd71cfcfa33566a22b.png"
                             />
                         ) : (
                             <button className={cx('more-btn')}>
