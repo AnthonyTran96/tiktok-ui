@@ -4,7 +4,7 @@ import 'tippy.js/dist/tippy.css'; // optional
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-import routes from '~/config/routes';
+import config from '~/config';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
 import Image from '~/components/Image';
@@ -155,7 +155,7 @@ function Header() {
         <header className={cx('wrapper')}>
             {/* logo */}
             <div className={cx('inner')}>
-                <Link to={routes.root} className={cx('logo')}>
+                <Link to={config.routes.root} className={cx('logo')}>
                     <img src={images.logo} alt="tiktok" />
                 </Link>
 

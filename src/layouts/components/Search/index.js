@@ -7,7 +7,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import { useDebounce } from '~/hooks';
 import { faCircleXmark, faSpinner, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchServices from '~/services/searchService';
 
 const cx = classNames.bind(styles);
 
