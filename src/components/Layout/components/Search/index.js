@@ -28,6 +28,13 @@ function Search() {
     const handleHideResult = () => {
         setShowResult(false);
     };
+    const handleChange = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchValue(searchValue);
+        }
+    };
+
     useEffect(() => {
         if (!debounced.trim()) {
             setSearchResult([]);
@@ -45,47 +52,55 @@ function Search() {
         fetchApi();
     }, [debounced]);
     return (
-        <HeadlessTippy
-            interactive
-            visible={showResult && searchResult.length > 0}
-            onClickOutside={handleHideResult}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Account</h4>
-                        {searchResult.map((result) => (
-                            <AccountItem key={result.id} data={result} />
-                        ))}
-                    </PopperWrapper>
+        //Using a wrapper <div> tag around the reference element solves tippy error by creating a new parentNode context.
+        <div>
+            <HeadlessTippy
+                interactive
+                visible={showResult && searchResult.length > 0}
+                onClickOutside={handleHideResult}
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Account</h4>
+                            {searchResult.map((result) => (
+                                <AccountItem key={result.id} data={result} />
+                            ))}
+                        </PopperWrapper>
+                    </div>
+                )}
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={searchInput}
+                        value={searchValue}
+                        onFocus={() => {
+                            setShowResult(true);
+                        }}
+                        onChange={handleChange}
+                        placeholder="Search accounts and videos"
+                        spellCheck={false}
+                    />
+                    {searchValue && !loading && (
+                        <button className={cx('clear')} onClick={handleClear}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+                    {loading && (
+                        <button className={cx('loading')}>
+                            <FontAwesomeIcon icon={faSpinner} />
+                        </button>
+                    )}
+                    <button
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => {
+                            e.preventDefault();
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </button>
                 </div>
-            )}
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={searchInput}
-                    value={searchValue}
-                    onFocus={() => {
-                        setShowResult(true);
-                    }}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search accounts and videos"
-                    spellCheck={false}
-                />
-                {searchValue && !loading && (
-                    <button className={cx('clear')} onClick={handleClear}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
-                )}
-                {loading && (
-                    <button className={cx('loading')}>
-                        <FontAwesomeIcon icon={faSpinner} />
-                    </button>
-                )}
-                <button className={cx('search-btn')}>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-            </div>
-        </HeadlessTippy>
+            </HeadlessTippy>
+        </div>
     );
 }
 
