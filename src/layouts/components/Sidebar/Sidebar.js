@@ -10,6 +10,7 @@ import {
     CameraIcon,
     CameraActiveIcon,
 } from '~/components/icons';
+import SuggestedAccounts from '../SuggestedAccounts';
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +32,8 @@ function Sidebar() {
                     activeIcon={<CameraActiveIcon />}
                 />
             </Menu>
+            <SuggestedAccounts lable="Suggested Accounts" />
+            <SuggestedAccounts lable="Following Accounts" />
         </aside>
     );
 }
